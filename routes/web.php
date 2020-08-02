@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +18,20 @@ Route::get('/', function () {
     return view('home');
 });
 
-
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/', 'HomeController@index')->name('home');
+
 Route::get('/post/{post}', 'PostController@show')->name('post');
+
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+Route::post('/search/', 'HomeController@searchPosts')->name('search');
+
+//AUTH-ROUTES
 
 Route::middleware('auth')->group(function (){
     Route::get('/admin', 'AdminsController@index')->name('admin.index');

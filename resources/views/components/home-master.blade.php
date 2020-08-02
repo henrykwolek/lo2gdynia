@@ -98,7 +98,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{route('admin.index')}}">Panel sterowania</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Wyloguj się</a>
+                            <a class="dropdown-item" href="{{route('logout')}}">Wyloguj się</a>
 
                         </div>
                     </div>
@@ -131,15 +131,7 @@
             <div class="card my-4">
                 <h5 class="card-header">Szukaj</h5>
                 <div class="card-body">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Szukana fraza">
-                        <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
-  <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-</svg></button>
-              </span>
-                    </div>
+                    <input type="text" name="search-posts" id="search-posts" class="form-control" placeholder="Szukana fraza">
                 </div>
             </div>
 
@@ -216,9 +208,21 @@
 
             <!-- Side Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Ważne informacje i ogłoszenia</h5>
+                <h5 class="card-header">Partnerzy szkoły</h5>
                 <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+                    <a href="https://wsaib.pl/">
+                        <img src="https://lo2gdynia.pl/images/banners/logo%20wsa.jpg" class="img-fluid w-100">
+                    </a>
+                    <a href="http://www.kulturalnepomorze.pl/">
+                        <img src="https://lo2gdynia.pl/images/banners/logo_fkp.jpg" class="img-fluid w-100">
+                    </a>
+                    <a href="https://grupa.energa.pl/otoczenie/fundacja">
+                        <img src="https://lo2gdynia.pl/images/banners/ENERGA.jpg" class="img-fluid w-100">
+                    </a>
+                    <a href="https://hotelwieniawa.com/">
+                        <img src="https://lo2gdynia.pl/images/banners/logo_cafe-aniol.jpg" class="img-fluid w-100">
+                    </a>
+                    <a href=""></a>
                 </div>
             </div>
 
@@ -241,6 +245,27 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+
+<script type="text/javascript">
+    $('body').on('keyup', '#search-posts', function(){
+        var searchQuest = $(this).val();
+
+        $.ajax({
+           method: 'POST',
+           url: '{{route("search")}}',
+           dataType: 'json',
+           data: {
+               '_token': '{{csrf_token()}}',
+               searchQuest: searchQuest,
+           },
+            success: function(response){
+               console.log(response);
+            }
+        });
+    });
+</script>
+
 
 </body>
 
